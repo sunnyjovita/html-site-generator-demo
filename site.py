@@ -16,22 +16,17 @@
 
 import os  # (Note: imported but not currently used—can be removed if unnecessary)
 
-def generate_html(content: str, filename: str = "index.html") -> None:
+def generate_html(content: str, filename: str = "index.html", custom_css: str = "") -> None:
     """
     Generates a complete HTML file with embedded CSS styling.
     
     Parameters:
         content (str): The HTML content to insert into the <body> tag.
         filename (str): The name of the output HTML file (default: "index.html").
+        custom_css (str): Additional CSS styling to include (default: "").
     """
-    # Define the full HTML structure as an f-string, inserting user-provided content
-    html_template = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple Site</title>
-    <style>
+    # Define default CSS
+    default_css = """
         body {
             font-family: monospace;
             background: #ffffff;
@@ -42,7 +37,20 @@ def generate_html(content: str, filename: str = "index.html") -> None:
         h1 {
             border-bottom: 1px solid #ccc;
             padding-bottom: 10px;
-        }
+        }"""
+    
+    # Combine default and custom CSS
+    css = default_css + "\n" + custom_css if custom_css else default_css
+    
+    # Define the full HTML structure as an f-string, inserting user-provided content
+    html_template = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Simple Site</title>
+    <style>
+        {css}
     </style>
 </head>
 <body>
@@ -63,8 +71,15 @@ def main():
     # Sample content to display on the webpage
     welcome_msg = "<h1>Hello from Python!</h1><p>This site was generated using Sunny's clean and minimal Python style.</p>"
     
+    # Custom CSS example
+    custom_styles = """
+        p {
+            color: #0066cc;
+            font-style: italic;
+        }"""
+    
     # Generate the HTML file with the sample content and a custom filename
-    generate_html(welcome_msg, "my_site_python.html")
+    generate_html(welcome_msg, "my_site_python.html", custom_styles)
 
 
 # Entry point: run main() only when the script is executed directly (not imported)
